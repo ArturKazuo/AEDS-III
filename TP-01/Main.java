@@ -700,12 +700,12 @@ public class Main {
                         long changePos= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newName.length() == conta.nomePessoa.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePos);
                             raf.writeUTF(newName);
                         }
                         else{                                              //caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             raf.seek(f.length());
                             raf.writeInt(conta.idConta);
                             raf.writeByte(0);
@@ -735,12 +735,12 @@ public class Main {
                         long changePosCpf= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newCpf.length() == conta.cpf.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePosCpf);
                             raf.writeUTF(newCpf);
                         }
                         else{//caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             raf.seek(f.length());
                             raf.writeInt(conta.idConta);
                             raf.writeByte(0);
@@ -770,12 +770,12 @@ public class Main {
                         long changePosCidade= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newCidade.length() == conta.cidade.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePosCidade);
                             raf.writeUTF(newCidade);
                         }
                         else{//caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             raf.seek(f.length());raf.writeInt(conta.idConta);
                             raf.writeByte(0);
                             raf.writeInt(conta.tamanho);
@@ -796,7 +796,7 @@ public class Main {
 
                     case 4://atualiza a quantidade de emails da conta
 
-                        System.out.println("Digite a nova cidade:");
+                        System.out.println("Digite a nova quantidade de emails:");
                         int newNumEmail = sc.nextInt();
                         sc.nextLine();
 
@@ -854,12 +854,12 @@ public class Main {
                         long changePosEmail= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newEmail.length() == conta.email[i+1].length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePosEmail);
                             raf.writeUTF(newEmail);
                         }
                         else{//caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             conta.email[i+1] = newEmail;
                             raf.seek(f.length());raf.writeInt(conta.idConta);
                             raf.writeByte(0);
@@ -893,12 +893,12 @@ public class Main {
                         long changePosNomeUsuario= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newNomeUsuario.length() == conta.nomeUsuario.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePosNomeUsuario);
                             raf.writeUTF(newNomeUsuario);
                         }
                         else{//caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             raf.seek(f.length());raf.writeInt(conta.idConta);
                             raf.writeByte(0);
                             raf.writeInt(conta.tamanho);
@@ -932,12 +932,12 @@ public class Main {
                         long changePosSenha= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
 
                         if(newSenha.length() == conta.senha.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
-                            raf.seek(pos - 1);
-                            raf.writeByte(1);
                             raf.seek(changePosSenha);
                             raf.writeUTF(newSenha);
                         }
                         else{//caso a string seja maior ou menor do que a que estava armazenada
+                            raf.seek(pos - 1);
+                            raf.writeByte(1);
                             raf.seek(f.length());raf.writeInt(conta.idConta);
                             raf.writeByte(0);
                             raf.writeInt(conta.tamanho);
