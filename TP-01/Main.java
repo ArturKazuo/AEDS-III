@@ -1350,7 +1350,7 @@ class listaInvertida{
         return false;
     }
 
-    public int contarPalavras(String nome){
+    public static int contarPalavras(String nome){
         int qntPalavras = 0;
         for(int i=0; i < nome.length(); i++){
             if(nome.charAt(i) == ' '){
@@ -1363,6 +1363,7 @@ class listaInvertida{
     public static void buscaLista(String palavra, String file){
         String palavras[] = new String[contarPalavras(palavra)];
         palavras = palavra.split(" ");
+        
     }
 
 }
