@@ -39,6 +39,7 @@ public class Main {
             System.out.println("digite 5 para deletar um registro");
             System.out.println("digite 6 para ordenar o arquivo");
             System.out.println("digite 7 para procurar por um registro no arquivo de hashing");
+            System.out.println("digite 8 para procurar o nome ou a cidade na lista invertida");
             resp = sc.nextInt();
 
             switch(resp){
@@ -204,8 +205,28 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
 
-                    break;  
+                    break;
+                case 8: 
+                    int op;
+                    System.out.println("O que voce quer procurar? \n (1) Nome \n (2) Cidade:");
+                    op = sc.nextInt();
+                    if(op ==1){
+                        String nome;
+                        System.out.println("Qual nome a procurar?");
+                        nome = sc.nextLine();
+                        listaInvertida.buscaLista(nome, "listaInvertida/listaInvertidoNome.txt");
+                    } else if(op == 2){
+                        String cidade;
+                        System.out.println("Qual nome a procurar?");
+                        cidade = sc.nextLine();
+                        listaInvertida.buscaLista(cidade, "listaInvertida/listaInvertidaCidade.txt");
+                    } else{
+                        System.out.println("Numero inválido");
+                    }
+                    String cidadeP = sc.nextLine();
 
+                    //long lista1 = listaInvertida
+                    break;
             }
 
         }while(true);
@@ -1264,6 +1285,84 @@ class HashingExtendido {//classe de hashing extendido
 
         return pos;//retorna a posição do registro no arquivo orginial
 
+    }
+
+}
+
+class listaInvertida{
+
+    private RandomAccessFile arq;
+    private final String ListaInveritidaNome = "listaInvertida/listaInvertidaNome.db";
+    private final String ListaInveritidaCidade = "listaInvertida/listaInvertidaCidade.db";
+    
+
+    //Função para a construtução de parametros e verificação de eistencia de arquivo.
+    public listaInvertida(){
+        try{
+            boolean exist_Cidade = (new File(ListaInveritidaCidade)).exists();
+            boolean exist_Nome = (new File(ListaInveritidaNome)).exists();
+            if (exist_Cidade == true && exist_Nome == true){
+
+            } else
+                try {
+                    RandomAccessFile arq = new RandomAccessFile(ListaInveritidaCidade, "rw");
+                    RandomAccessFile arq = new RandomAccessFile(ListaInveritidaNome, "rw");
+                    arq.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }             
+    }
+
+    //Função para verificar palavra dentro da lista
+    public boolean verificaPalavra(String palavra, String file){
+        try {
+            arq = new RandomAccessFile(file, "r");
+
+            String palavranoArq = "";
+
+            arq.seek(0);
+            while(arq.getFilePointer() < arq.length()){
+                palavranoArq = arq.readUTF();
+                arq.readInt();
+                arq.readUTF();
+                arq.readUTF();
+                arq.readUTF();
+                int n = arq.readInt();
+                for(int j=0; j<n; j++){
+                    arq.readUTF();
+                }
+                arq.readUTF();
+                arq.readUTF();
+                arq.readFloat();
+                arq.readInt();
+                if(palavra.compareTo(palavranoArq) == 0) {
+                    return true;
+                }
+            }
+          
+        } catch(Exception e){
+           System.out.println("Não foi encotrado a palvra no arquivo.");
+        }
+        return false;
+    }
+
+    public int contarPalavras(String nome){
+        int qntPalavras = 0;
+        for(int i=0; i < nome.length(); i++){
+            if(nome.charAt(i) == ' '){
+                qntPalavras++;
+            }
+        }
+        return qntPalavras;
+    }
+    
+    public static void buscaLista(String palavra, String file){
+        String palavras[] = new String[contarPalavras(palavra)];
+        palavras = palavra.split(" ");
     }
 
 }
