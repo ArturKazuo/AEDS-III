@@ -1,4 +1,5 @@
 import java.nio.file.FileAlreadyExistsException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -219,7 +220,7 @@ public class Main {
                         String cidade;
                         System.out.println("Qual nome a procurar?");
                         cidade = sc.nextLine();
-                        listaInvertida.buscaLista1(cidade, "listaInvertida/listaInvertidaCidade.txt");
+                        listaInvertida.buscaLista(cidade, "listaInvertida/listaInvertidaCidade.txt");
                     } else{
                         System.out.println("Numero inválido");
                     }
@@ -227,6 +228,14 @@ public class Main {
 
                     //long lista1 = listaInvertida
                     break;
+
+                    case 9:
+
+                        System.out.println("Compressão por Huffman começando...");
+
+                        Huffman.compress(f);
+
+                        break;
             }
 
         }while(true);
@@ -1306,8 +1315,9 @@ class listaInvertida{
             } else
                 try {
                     RandomAccessFile arq = new RandomAccessFile(ListaInveritidaCidade, "rw");
-                    RandomAccessFile arq = new RandomAccessFile(ListaInveritidaNome, "rw");
+                    RandomAccessFile arqN = new RandomAccessFile(ListaInveritidaNome, "rw");
                     arq.close();
+                    arqN.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1567,7 +1577,7 @@ class listaInvertida{
         }
     }
     //Funcao necessaria para confirmar se o id esta presente na lista
-    public boolean idExistsInArray(ArrayList<Byte> ids, byte id) {
+    static public boolean idExistsInArray(ArrayList<Byte> ids, byte id) {
         for(Byte idList : ids) {
             if(idList == id) {
                 return true;
