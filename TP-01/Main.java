@@ -41,6 +41,8 @@ public class Main {
             System.out.println("digite 6 para ordenar o arquivo");
             System.out.println("digite 7 para procurar por um registro no arquivo de hashing");
             System.out.println("digite 8 para procurar o nome ou a cidade na lista invertida");
+            System.out.println("digite 9 para realizar compressão em huffman e lzw");
+            System.out.println("digite 10 para realizar decompressão em huffman e lzw");
             resp = sc.nextInt();
 
             switch(resp){
@@ -231,11 +233,14 @@ public class Main {
 
                     case 9:
 
-                        System.out.println("Compressão por Huffman começando...");
-
                         Huffman.compress(f);
 
-                        break;
+                    break;
+
+                    case 10:
+
+                        Huffman.decompress();
+
             }
 
         }while(true);
