@@ -43,6 +43,8 @@ public class Main {
             System.out.println("digite 8 para procurar o nome ou a cidade na lista invertida");
             System.out.println("digite 9 para realizar compressão em huffman e lzw");
             System.out.println("digite 10 para realizar decompressão em huffman e lzw");
+            System.out.println("digite 11 para realizar a criptografia por cifra de cesar");
+            System.out.println("digite 12 para realizar a descriptografia por cifra de cesar");
             resp = sc.nextInt();
 
             switch(resp){
@@ -240,6 +242,25 @@ public class Main {
                     case 10:
 
                         Huffman.decompress();
+                    
+                    break;
+
+                    case 11:
+
+                        System.out.println("Digite o id da conta que vai ter a senha criptografada: ");
+                        int idCripto = sc.nextInt();
+                        CifraCesar.criptografar(idCripto);
+
+                    break;
+
+                    case 12:
+
+                        System.out.println("Digite o id da conta que vai ter a senha descriptografada: ");
+                        int idDesCripto = sc.nextInt();
+                        CifraCesar.descriptografar(idDesCripto);
+
+                    break;
+
 
             }
 
@@ -957,7 +978,9 @@ public class Main {
                         System.out.println("Digite a nova senha:");
                         String newSenha = sc.nextLine();
 
-                        raf.seek(pos);raf.readInt();raf.readUTF();raf.readUTF();raf.readUTF();raf.readInt();//percorre parte do registro até chegar na posição desejada
+                        atualizarSenha(newSenha, pos, conta);
+
+                        /*raf.seek(pos);raf.readInt();raf.readUTF();raf.readUTF();raf.readUTF();raf.readInt();//percorre parte do registro até chegar na posição desejada
 
                         for(int j=0; j<conta.numEmails; j++){
                             raf.readUTF();
@@ -987,7 +1010,7 @@ public class Main {
                             raf.writeUTF(newSenha);
                             raf.writeFloat(conta.saldoConta);
                             raf.writeInt(conta.transferenciasRealizadas);
-                        }
+                        }*/
 
                         break;
 
@@ -1005,6 +1028,52 @@ public class Main {
         }
 
 
+    }
+
+    public static void atualizarSenha(String newSenha, long pos, Conta conta){
+
+        try{
+
+            RandomAccessFile raf = new RandomAccessFile("arquivo.txt", "rw");
+            File f = new File("arquivo.txt");
+
+            raf.seek(pos);raf.readInt();raf.readUTF();raf.readUTF();raf.readUTF();raf.readInt();//percorre parte do registro até chegar na posição desejada
+
+            for(int j=0; j<conta.numEmails; j++){
+                raf.readUTF();
+            }
+            raf.readUTF();
+
+            long changePosSenha= raf.getFilePointer();//armazena a posição do ponteiro antes da string para mudar o nome
+
+            if(newSenha.length() == conta.senha.length()){//caso a string seja de tamanho igual a que ja havia sido armazenada
+                raf.seek(changePosSenha);
+                raf.writeUTF(newSenha);
+            }
+            else{//caso a string seja maior ou menor do que a que estava armazenada
+                raf.seek(pos - 1);
+                raf.writeByte(1);
+                raf.seek(f.length());raf.writeInt(conta.idConta);
+                raf.writeByte(0);
+                raf.writeInt(conta.tamanho);
+                raf.writeUTF(conta.nomePessoa);
+                raf.writeUTF(conta.cpf);
+                raf.writeUTF(conta.cidade);
+                raf.writeInt(conta.numEmails);
+                for(int j=0; j<conta.numEmails; j++){
+                    raf.writeUTF(conta.email[j]);
+                }
+                raf.writeUTF(conta.nomeUsuario);
+                raf.writeUTF(newSenha);
+                raf.writeFloat(conta.saldoConta);
+                raf.writeInt(conta.transferenciasRealizadas);
+            }
+
+            raf.close();
+
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public static long findRegistro(File f, int idFind){//metodo que retorna a posição do registro com o id desejado
